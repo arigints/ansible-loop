@@ -1,0 +1,41 @@
+- name: create user accounts for managed1 server
+  hosts: managed1-host-arigints
+  become: true
+
+  vars_files:
+    - secret.yml
+    - group_vars/managed1-host-arigints.yml
+
+  tasks:
+    - name: creating user opss from secret.yml
+      user:
+        name: "{{ item.username }}"
+        password: "{{ pass | password_hash('sha512') }}"
+      loop: "{{ list_user_ops_managed1 | from_yaml }}"
+
+    - name: creating user devv from secret.yml
+      user:
+        name: "{{ item.username }}"
+        password: "{{pass | password_hash('sha512')}}"
+      loop: "{{ list_user_dev_managed1 | from_yaml }}"
+
+- name: create user accounts for managed2 server
+  hosts: managed2-host-arigints
+  become: true
+
+  vars_files:
+    - secret.yml
+    - group_vars/managed2-host-arigints.yml
+
+  tasks:
+    - name: creating user ops from secret.yml
+      user:
+        name: "{{ item.username }}"
+        password: "{{pass | password_hash('sha512')}}"
+      loop: "{{ list_user_ops_managed2 | from_yaml}}"
+
+    - name: creating user dev from secret.yml
+      user:
+        name: "{{ item.username }}"
+        password: "{{pass | password_hash('sha512')}}"
+      loop: "{{ list_user_dev_managed2 | from_yaml}}"

@@ -1,0 +1,9 @@
+list_user_ops_managed1: |
+  {% for i in range(1,51) %}
+  - username: ops{{i}}
+  {% endfor %}
+
+list_user_dev_managed1: |
+  {% for i in range(1, 51) %}
+  - username: dev{{i}}
+  {% endfor %}
